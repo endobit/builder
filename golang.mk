@@ -10,7 +10,7 @@ $(GOPATH)/bin:
 $(GOPATH)/bin/golangci-lint: $(GOPATH)/bin
 	curl -sSfL \
 		https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | \
-		sh -s -- -b $(GOPATH)/bin v1.48.0
+		sh -s -- -b $(GOPATH)/bin v1.51.2
 
 lint:: go-lint go-vulncheck
 test:: go-test
