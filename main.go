@@ -30,8 +30,9 @@ func main() {
 
 func newInitCmd() *cobra.Command {
 	var (
-		builderDir string
-		makeFile   string
+		builderDir   string
+		makeFile     string
+		organization string
 	)
 
 	cmd := cobra.Command{
@@ -61,12 +62,22 @@ func newInitCmd() *cobra.Command {
 				fmt.Println(path.Join(builderDir, f.Name()))
 			}
 
+			org, err := os.Create(path.Join(builderDir, "organization.mk"))
+			if err != nil {
+				return err
+			}
+
+			defer org.Close()
+
+			fmt.Fprintf(org, "ORGANIZATION=%s\n", organization)
+
 			return makefile(makeFile, builderDir)
 		},
 	}
 
 	cmd.Flags().StringVar(&builderDir, "builder", ".builder", "destination dir for build rules")
 	cmd.Flags().StringVar(&makeFile, "makefile", "Makefile", "make filename")
+	cmd.Flags().StringVar(&organization, "organization", "endobit", "name of ORGANIZATION")
 
 	return &cmd
 }
@@ -82,7 +93,9 @@ func makefile(filename, builderDir string) error {
 		defer fout.Close()
 
 		fmt.Fprintf(fout, "BUILDER=./%s\n", builderDir)
+		fmt.Fprintf(fout, "#RULES=go")
 		fmt.Fprintf(fout, "include $(BUILDER)/rules.mk\n")
+		fmt.Fprintf(fout, "$(BUILDER)/rules.mk:\n\t-go run github.com/endobit/builder@latest init")
 		fmt.Fprintln(fout)
 
 		return nil

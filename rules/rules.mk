@@ -20,12 +20,16 @@ ifneq ($(filter go,$(RULES)),)
 include $(BUILDER)/golang.mk
 endif
 
+.PHONY: build-init
+builder-init:: ## (re)initialize build environment
+	go run github.com/endobit/builder@latest init
+
 help: ## print help
 	@egrep -oh '^[A-Za-z_\-]+:+ \#\#.*$$' $(MAKEFILE_LIST) | \
 		sort | \
 		awk 'BEGIN { FS = ":+ \#\#"} { printf "$(c.INF)%-16s$(c.RST) %s\n", $$1, $$2 }'
 
-ORGANIZATION  = endobit
+-include $(BUILDER)/organization.mk
 COPYRIGHT     = "\(c\) $(shell date +%Y) $(ORGANIZATION)"
 
 dump::
