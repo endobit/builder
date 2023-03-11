@@ -25,7 +25,7 @@ help: ## print help
 		sort | \
 		awk 'BEGIN { FS = ":+ \#\#"} { printf "$(c.INF)%-16s$(c.RST) %s\n", $$1, $$2 }'
 
-ORGANIZATION  = endobit
+-include $(BUILDER)/organization.mk
 COPYRIGHT     = "\(c\) $(shell date +%Y) $(ORGANIZATION)"
 
 dump::
