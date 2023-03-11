@@ -93,7 +93,9 @@ func makefile(filename, builderDir string) error {
 		defer fout.Close()
 
 		fmt.Fprintf(fout, "BUILDER=./%s\n", builderDir)
+		fmt.Fprintf(fout, "#RULES=go")
 		fmt.Fprintf(fout, "include $(BUILDER)/rules.mk\n")
+		fmt.Fprintf(fout, "$(BUILDER)/rules.mk:\n\t-go run github.com/endobit/builder@latest init")
 		fmt.Fprintln(fout)
 
 		return nil
