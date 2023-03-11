@@ -13,11 +13,11 @@ nuke:: ## remove all build artifacts
 dump:: ## rules debug info
 
 ifneq ($(TERM),)
-include $(RULESDIR)/color.mk
+include $(BUILDER)/color.mk
 endif
 
 ifneq ($(filter go,$(RULES)),)
-include $(RULESDIR)/golang.mk
+include $(BUILDER)/golang.mk
 endif
 
 help: ## print help

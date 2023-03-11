@@ -1,8 +1,10 @@
 ifndef __golang_mk
 __gloang_mk=1
 
-include $(RULESDIR)/git.mk
+include $(BUILDER)/git.mk
+
 GO_LDFLAGS = -ldflags "-X main.version=$(GIT_VERSION)"
+GO_BUILD = go build $(GO_LDFLAGS)
 
 $(GOPATH)/bin:
 	mkdir -p $@
@@ -17,8 +19,6 @@ test:: go-test
 
 .PHONY: go-build go-format go-lint go-test go-vulncheck
 
-go-build: ## builds all go code
-	GOOS=$(GOOS) GOARCH=$(GOARCH) go build $(GO_LDFLAGS) ./...
 
 go-format: ## format all go code
 	go run golang.org/x/tools/cmd/goimports@latest -w .
@@ -38,5 +38,6 @@ go-vulncheck:
 
 dump::
 	@echo "GO_LDFLAGS   $(GO_LDFLAGS)"
+	@echo "GO_BUILD     $(GO_BUILD)"
 
 endif # __golang_mk
