@@ -8,6 +8,7 @@ import (
 	"io/fs"
 	"os"
 	"path"
+	"runtime/debug"
 
 	"github.com/spf13/cobra"
 )
@@ -17,8 +18,9 @@ var rules embed.FS
 
 func main() {
 	cmd := cobra.Command{
-		Use:   "builder",
-		Short: "software build tools",
+		Use:     "builder",
+		Short:   "software build tools",
+		Version: version,
 	}
 
 	cmd.AddCommand(newInitCmd())
@@ -122,4 +124,26 @@ func copy(disk fs.FS, src, dst string) error {
 	_, err = io.Copy(fout, fin)
 
 	return err
+}
+
+var version string
+
+func init() {
+	if version != "" {
+		return
+	}
+
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		return
+	}
+
+	for _, s := range info.Settings {
+		if s.Key == "vcs.revision" {
+			version = s.Value
+			return
+		}
+	}
+
+	version = "?"
 }
