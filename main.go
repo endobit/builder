@@ -1,3 +1,5 @@
+// Package main is the builder app. Builder is used to install a set the
+// makefile rules in a development tree.
 package main
 
 import (
@@ -56,9 +58,9 @@ func newInitCmd() *cobra.Command {
 			}
 
 			for _, f := range files {
-				err := copy(disk, f.Name(), path.Join(builderDir, f.Name()))
+				err := copyfile(disk, f.Name(), path.Join(builderDir, f.Name()))
 				if err != nil {
-					return fmt.Errorf("cannot copy %q: %v", f.Name(), err)
+					return fmt.Errorf("cannot copy %q: %w", f.Name(), err)
 				}
 
 				fmt.Println(path.Join(builderDir, f.Name()))
@@ -106,7 +108,7 @@ func makefile(filename, builderDir string) error {
 	return fmt.Errorf("cannot initialize %q - file exists", filename)
 }
 
-func copy(disk fs.FS, src, dst string) error {
+func copyfile(disk fs.FS, src, dst string) error {
 	fin, err := disk.Open(src)
 	if err != nil {
 		return err
