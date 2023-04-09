@@ -26,8 +26,8 @@ go-format: ## format all go code
 go-lint: $(GOPATH)/bin/golangci-lint
 	@echo "$(c.INF)$@$(c.RST)"
 	@$(GOPATH)/bin/golangci-lint version
-	@[ -x .golangci.yaml ] && $(GOPATH)/bin/golangci-lint run || true
-	@[ ! -x .golangci.yaml ] && $(GOPATH)/bin/golangci-lint run --config=$(BUILDER)/golangci.yaml
+	@[ -e .golangci.yaml ] && $(GOPATH)/bin/golangci-lint run || true
+	@[ ! -e .golangci.yaml ] && $(GOPATH)/bin/golangci-lint run --config=$(BUILDER)/golangci.yaml
 
 go-test:
 	@echo "$(c.INF)$@$(c.RST)"
