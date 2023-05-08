@@ -6,22 +6,25 @@ include $(BUILDER)/git.mk
 GO_LDFLAGS = -ldflags "-X main.version=$(GIT_VERSION)"
 GO_BUILD = go build $(GO_LDFLAGS)
 
+go_langci_version = v1.52.2
+
 $(GOPATH)/bin:
 	mkdir -p $@
 
 $(GOPATH)/bin/golangci-lint: $(GOPATH)/bin
 	curl -sSfL \
 		https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | \
-		sh -s -- -b $(GOPATH)/bin v1.52.2
+		sh -s -- -b $(GOPATH)/bin $(go_langci_version)
 
+format:: go-format
 lint:: go-lint go-vulncheck
 test:: go-test
 
 .PHONY: go-build go-format go-lint go-test go-vulncheck
 
-
-go-format: ## format all go code
-	go run golang.org/x/tools/cmd/goimports@latest -w .
+go-format:
+	@echo "$(c.INF)$@$(c.RST)"
+	@go run golang.org/x/tools/cmd/goimports@latest -w .
 
 go-lint: $(GOPATH)/bin/golangci-lint
 	@echo "$(c.INF)$@$(c.RST)"
