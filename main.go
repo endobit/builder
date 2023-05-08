@@ -1,5 +1,5 @@
-// Package main is the builder app. Builder is used to install a set the
-// makefile rules in a development tree.
+// Package main is the builder app. Builder is used to install the set
+// of makefile rules in a development tree.
 package main
 
 import (
@@ -105,7 +105,9 @@ func makefile(filename, builderDir string) error {
 		return nil
 	}
 
-	return fmt.Errorf("cannot initialize %q - file exists", filename)
+	fmt.Printf("cannot initialize %q - file exists", filename)
+
+	return nil
 }
 
 func copyfile(disk fs.FS, src, dst string) error {
