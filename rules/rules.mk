@@ -4,13 +4,14 @@ __rules_mk=1
 .DEFAULT_GOAL = help
 
 .PHONY: generate build lint test clean nuke dump
-generate:: ## generate source code
 build:: ## build everything
-lint:: ## run linters
-test:: ## run tests
 clean:: ## remove build artifacts
-nuke:: ## remove all build artifacts
 dump:: ## rules debug info
+format:: ## run code formatters
+generate:: ## generate source code
+lint:: ## run linters
+nuke:: ## remove all build artifacts
+test:: ## run tests
 
 ifneq ($(TERM),)
 include $(BUILDER)/color.mk
@@ -25,8 +26,7 @@ builder-init:: ## (re)initialize build environment
 	go run github.com/endobit/builder@latest init
 
 help: ## print help
-	@egrep -oh '^[A-Za-z_\-]+:+ \#\#.*$$' $(MAKEFILE_LIST) | \
-		sort | \
+	@egrep -oh '^[A-Za-z_\-]+:+ \#\#.*$$' $(MAKEFILE_LIST) | sort | \
 		awk 'BEGIN { FS = ":+ \#\#"} { printf "$(c.INF)%-16s$(c.RST) %s\n", $$1, $$2 }'
 
 -include $(BUILDER)/organization.mk
