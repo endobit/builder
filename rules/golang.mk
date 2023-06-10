@@ -3,7 +3,9 @@ __gloang_mk=1
 
 include $(BUILDER)/git.mk
 
-GO_LDFLAGS = -ldflags "-X main.version=$(GIT_VERSION)"
+ifneq (,$(GIT_VERSION))
+	GO_LDFLAGS = -ldflags "-X main.version=$(GIT_VERSION)"
+endif
 GO_BUILD = go build $(GO_LDFLAGS)
 
 go_langci_version = v1.52.2
@@ -30,7 +32,7 @@ go-lint: $(GOPATH)/bin/golangci-lint
 	@echo "$(c.INF)$@$(c.RST)"
 	@$(GOPATH)/bin/golangci-lint version
 	@[ -e .golangci.yaml ] && $(GOPATH)/bin/golangci-lint run || true
-	@[ ! -e .golangci.yaml ] && $(GOPATH)/bin/golangci-lint run --config=$(BUILDER)/golangci.yaml
+	@[ ! -e .golangci.yaml ] && $(GOPATH)/bin/golangci-lint run --config=$(BUILDER)/golangci.yaml || true
 
 go-test:
 	@echo "$(c.INF)$@$(c.RST)"
