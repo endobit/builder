@@ -21,6 +21,10 @@ ifneq ($(filter go,$(RULES)),)
 include $(BUILDER)/golang.mk
 endif
 
+ifneq ($(filter swift,$(RULES)),)
+include $(BUILDER)/swift.mk
+endif
+
 .PHONY: build-init
 builder-init:: ## (re)initialize build environment
 	go run github.com/endobit/builder@latest init
