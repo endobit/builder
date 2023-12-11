@@ -1,5 +1,5 @@
 ifndef __golang_mk
-__gloang_mk=1
+__golang_mk=1
 
 include $(BUILDER)/git.mk
 
