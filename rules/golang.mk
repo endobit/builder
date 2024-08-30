@@ -8,7 +8,7 @@ ifneq (,$(GIT_VERSION))
 endif
 GO_BUILD = go build $(GO_LDFLAGS)
 
-go_langci_version = v1.54.2
+go_langci_version = v1.60.3
 
 $(GOPATH)/bin:
 	mkdir -p $@
