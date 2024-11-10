@@ -8,7 +8,7 @@ ifneq (,$(GIT_VERSION))
 endif
 GO_BUILD = go build $(GO_LDFLAGS)
 
-go_langci_version = v1.60.3
+go_langci_version = v1.62.0
 
 $(GOPATH)/bin:
 	mkdir -p $@
@@ -21,6 +21,7 @@ $(GOPATH)/bin/golangci-lint: $(GOPATH)/bin
 format:: go-format
 lint:: go-lint go-vulncheck
 test:: go-test
+generate:: go-generate
 
 .PHONY: go-build go-format go-lint go-test go-vulncheck
 
@@ -41,6 +42,10 @@ go-test:
 go-vulncheck: 
 	@echo "$(c.INF)$@$(c.RST)"
 	go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+
+go-generate:
+	@echo "$(c.INF)$@$(c.RST)"
+	go generate ./...
 
 dump::
 	@echo "GO_LDFLAGS   $(GO_LDFLAGS)"
