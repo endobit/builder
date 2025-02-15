@@ -7,7 +7,7 @@ Makefile rules for building code.
 From the root of your source tree run the following:
 
 ```
-go run github.com/endobit/builder init
+go run endobit.io/builder init
 ```
 
 This will create a top level `Makefile` and a `.builder` subdirectory with the

@@ -1,4 +1,4 @@
-module github.com/endobit/builder
+module endobit.io/builder
 
 go 1.20
 
