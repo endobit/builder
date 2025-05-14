@@ -1,1 +1,1 @@
-ORGANIZATION=endobit
+ORGANIZATION?=endobit
