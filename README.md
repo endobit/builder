@@ -1,3 +1,5 @@
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/endobit/builder/build.yaml?branch=main)](https://github.com/endobit/builder/actions?query=workflow%3Abuild)
+
 # Builder
 
 Makefile rules for building code.
@@ -18,4 +20,3 @@ For Go projects add the following before the `include` line.
 ```
 RULES=go
 ```
-
