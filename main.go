@@ -43,7 +43,7 @@ func newInitCmd() *cobra.Command {
 		Use:   "init",
 		Short: "initialize the build environment",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := os.MkdirAll(builderDir, os.ModePerm); err != nil {
+			if err := os.MkdirAll(builderDir, 0o750); err != nil {
 				return err
 			}
 
@@ -145,6 +145,7 @@ func init() {
 	for _, s := range info.Settings {
 		if s.Key == "vcs.revision" {
 			version = s.Value
+
 			return
 		}
 	}
