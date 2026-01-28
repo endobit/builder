@@ -34,7 +34,7 @@ endif
 
 .PHONY: build-init
 builder-init: ## (re)initialize build environment
-	go run github.com/endobit/builder@latest init
+	go run endobit.io/builder@latest init
 
 help: ## print help
 	@egrep -oh '^[A-Za-z_\-]+:+ +\#\#.*$$' $(MAKEFILE_LIST) | sort | \
