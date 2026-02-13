@@ -15,7 +15,7 @@ test::     ## run tests
 
 nuke:: clean
 
-ifneq ($(TERM),)
+ifdef TERM
 include $(BUILDER)/color.mk
 endif
 
