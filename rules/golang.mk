@@ -3,10 +3,17 @@ __golang_mk=1
 
 include $(BUILDER)/git.mk
 
-GO           = go
-GO_LINT      = golangci-lint
-GO_FMT       = go run golang.org/x/tools/cmd/goimports@latest
-GO_VULNCHECK = go run golang.org/x/vuln/cmd/govulncheck@latest
+ifdef GOEXPERIMENT
+	GO_VARS = GOEXPERIMENT=$(GOEXPERIMENT)
+endif
+
+GO           = $(join $(GO_VARS), go)
+GO_LINT      = $(join $(GO_VARS), golangci-lint)
+ifeq ("$(wildcard .golangci.yaml)","")
+	GO_LINT_ARGS = --config=$(BUILDER)/golangci.yaml
+endif
+GO_FMT       = $(GO) run golang.org/x/tools/cmd/goimports@latest
+GO_VULNCHECK = $(GO) run golang.org/x/vuln/cmd/govulncheck@latest
 
 ifneq (,$(GIT_VERSION))
 	GO_LDFLAGS = -ldflags "-X main.version=$(GIT_VERSION)"
@@ -14,12 +21,16 @@ endif
 
 GO_BUILD = $(GO) build $(GO_LDFLAGS)
 
+.PHONY: go-build go-format go-lint go-test go-vulncheck go-generate
+
 format:: go-format
+generate:: go-generate
 lint:: go-lint go-vulncheck
 test:: go-test
-generate:: go-generate
 
-.PHONY: go-build go-format go-lint go-test go-vulncheck go-generate
+go-build:
+	@echo "$(c.INF)$@$(c.RST)"
+	$(GO_BUILD) .
 
 go-format:
 	@echo "$(c.INF)$@$(c.RST)"
@@ -28,11 +39,7 @@ go-format:
 go-lint:
 	@echo "$(c.INF)$@$(c.RST)"
 	@$(GO_LINT) version
-ifneq ("$(wildcard .golangci.yaml)","")
-	@$(GO_LINT) run
-else
-	@$(GO_LINT) run --config=$(BUILDER)/golangci.yaml
-endif
+	@$(GO_LINT) run $(GO_LINT_ARGS)
 
 go-test:
 	@echo "$(c.INF)$@$(c.RST)"
