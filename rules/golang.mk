@@ -3,8 +3,12 @@ __golang_mk=1
 
 include $(BUILDER)/git.mk
 
+GO_VARS =
 ifdef GOEXPERIMENT
-	GO_VARS = GOEXPERIMENT=$(GOEXPERIMENT)
+	GO_VARS += GOEXPERIMENT=$(GOEXPERIMENT)
+endif
+ifdef CGO_ENABLED
+	GO_VARS += CGO_ENABLED=$(CGO_ENABLED)
 endif
 
 GO           = $(join $(GO_VARS), go)
@@ -30,7 +34,7 @@ test:: go-test
 
 go-build:
 	@echo "$(c.INF)$@$(c.RST)"
-	$(GO_BUILD) .
+	@$(GO_BUILD) .
 
 go-format:
 	@echo "$(c.INF)$@$(c.RST)"
