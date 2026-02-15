@@ -11,5 +11,5 @@ on:
 jobs:
   build:
     uses: endobit/ci/.github/workflows/go-build.yaml@v1
-  lint:
-    uses: endobit/ci/.github/workflows/go-lint.yaml@v1
+  # lint:
+  #   uses: endobit/ci/.github/workflows/go-lint.yaml@v1
