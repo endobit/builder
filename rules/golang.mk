@@ -3,16 +3,16 @@ __golang_mk=1
 
 include $(BUILDER)/git.mk
 
-GO_VARS =
 ifdef GOEXPERIMENT
-	GO_VARS += GOEXPERIMENT=$(GOEXPERIMENT)
+	GO_VARS      += GOEXPERIMENT=$(GOEXPERIMENT)
+	GO_LINT_VARS += GOEXPERIMENT=$(GOEXPERIMENT)
 endif
 ifdef CGO_ENABLED
 	GO_VARS += CGO_ENABLED=$(CGO_ENABLED)
 endif
 
-GO           = $(join $(GO_VARS), go)
-GO_LINT      = $(join $(GO_VARS), golangci-lint)
+GO           = $(strip $(GO_VARS) go)
+GO_LINT      = $(strip $(GO_LINT_VARS) golangci-lint)
 ifeq ("$(wildcard .golangci.yaml)","")
 	GO_LINT_ARGS = --config=$(BUILDER)/golangci.yaml
 endif
