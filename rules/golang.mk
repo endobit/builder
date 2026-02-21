@@ -25,8 +25,9 @@ endif
 
 GO_BUILD = $(GO) build $(GO_LDFLAGS)
 
-.PHONY: go-build go-format go-lint go-test go-vulncheck go-generate
+.PHONY: go-build go-format go-fix go-lint go-test go-vulncheck go-generate
 
+fix:: go-fix
 format:: go-format
 generate:: go-generate
 lint:: go-lint go-vulncheck
@@ -35,6 +36,10 @@ test:: go-test
 go-build:
 	@echo "$(c.INF)$@$(c.RST)"
 	@$(GO_BUILD) .
+
+go-fix: ## run go fix
+	@echo "$(c.INF)$@$(c.RST)"
+	@$(GO) fix ./...
 
 go-format:
 	@echo "$(c.INF)$@$(c.RST)"
