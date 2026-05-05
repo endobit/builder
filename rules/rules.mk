@@ -48,7 +48,7 @@ help: ## print help
 	@egrep -oh '^[A-Za-z_\-]+:+ +\#\#.*$$' $(MAKEFILE_LIST) | sort | \
 		awk 'BEGIN { FS = ":+ +\#\#"} { printf "$(c.INF)%-16s$(c.RST) %s\n", $$1, $$2 }'
 
-include $(BUILDER)/organization.mk
+include $(BUILDER)/copyright.mk
 
 dump::
 	@echo "OS_NAME      $(OS_NAME)"
