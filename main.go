@@ -18,6 +18,8 @@ import (
 //go:embed rules
 var rules embed.FS
 
+var defaultOrg = "endobit"
+
 func main() {
 	cmd := cobra.Command{
 		Use:     "builder",
@@ -81,7 +83,7 @@ func newInitCmd() *cobra.Command {
 
 	cmd.Flags().StringVar(&builderDir, "builder", ".builder", "destination dir for build rules")
 	cmd.Flags().StringVar(&makeFile, "makefile", "Makefile", "make filename")
-	cmd.Flags().StringVar(&organization, "org", "endobit", "name of ORGANIZATION")
+	cmd.Flags().StringVar(&organization, "org", defaultOrg, "name of ORGANIZATION")
 
 	return &cmd
 }
@@ -126,17 +128,6 @@ func copyfile(disk fs.FS, src, dst string) error {
 	defer fout.Close()
 
 	if _, err = io.Copy(fout, fin); err != nil {
-		return err
-	}
-
-	// Copy the file permissions from the source file to the destination file
-
-	info, err := fin.Stat()
-	if err != nil {
-		return err
-	}
-
-	if err := os.Chmod(dst, info.Mode()); err != nil {
 		return err
 	}
 

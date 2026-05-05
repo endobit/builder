@@ -3,9 +3,9 @@ __rules_mk=1
 
 .DEFAULT_GOAL = help
 
-OS_NAME = $(shell $(BUILDER)/os)
-OS_DIST = $(shell $(BUILDER)/os --dist)
-ARCH    = $(shell $(BUILDER)/arch)
+OS_NAME = $(shell /bin/sh $(BUILDER)/os.sh)
+OS_DIST = $(shell /bin/sh $(BUILDER)/os.sh --dist)
+ARCH    = $(shell /bin/sh $(BUILDER)/arch.sh)
 
 .PHONY: build clean dump format generate lint nuke test
 build::    ## build everything
