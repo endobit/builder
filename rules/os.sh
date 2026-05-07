@@ -8,7 +8,7 @@ if command -v uname >/dev/null 2>&1; then
     OS="$(uname)"
 fi
 
-function os() {
+os() {
 	case "$OS" in
 		Linux)
 			echo linux
@@ -22,7 +22,7 @@ function os() {
 	esac
 }
 
-function os_dist() {
+os_dist() {
 	case "$OS" in
 		Linux)
 			if [ -f /etc/os-release ]; then
