@@ -3,12 +3,13 @@ __pkg_mk=1
 
 include $(BUILDER)/git.mk
 
-PKG_DIR     = .package
-PKG_ROOT    = $(GIT_ROOT)
-PKG_VERSION = $(GIT_VERSION)
-PKG_ARCH    = $(ARCH)
-PKG_OS      = $(OS_NAME)
-PKG_NAME    = $(notdir $(PKG_ROOT))_$(PKG_OS)_$(PKG_ARCH)_$(PKG_VERSION).tgz
+PKG_DIR      := .package
+PKG_ROOT     := $(GIT_ROOT)
+PKG_VERSION  := $(GIT_VERSION)
+PKG_ARCH     := $(ARCH)
+PKG_OS       := $(OS_NAME)
+PKG_BASENAME := $(notdir $(PKG_ROOT))
+PKG_NAME     ?= $(PKG_BASENAME)_$(PKG_OS)_$(PKG_ARCH)_$(PKG_VERSION).tgz
 
 $(PKG_DIR):
 	[[ -d $(PKG_DIR) ]] || mkdir -p $(PKG_DIR)
